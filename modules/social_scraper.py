@@ -10,7 +10,10 @@ PLATFORMS = {
     "GitHub": "https://github.com/{}",
     "Twitter": "https://twitter.com/{}",
     "Instagram": "https://www.instagram.com/{}",
-    "LinkedIn": "https://www.linkedin.com/in/{}"
+    "LinkedIn": "https://www.linkedin.com/in/{}",
+    "Snapchat" : "https://www.snapchat.com/add/{}",
+    "Tiktok" : "https://www.tiktok.com/{}",
+
 }
 
 HEADERS = {

@@ -4,14 +4,15 @@ A lightweight Python tool for **Open Source Intelligence (OSINT)** tasks:
 - 🌐 WHOIS lookups on domains  
 - 👤 Username footprinting across popular platforms  
 - 📊 Exporting results to CSV for reporting  
+- 🔍 Shodan integration for IP/domain intelligence (open ports, hostnames, org info)  
 
-This project is designed as a **student cybersecurity portfolio project** and is actively being expanded (Shodan & HaveIBeenPwned integrations coming soon 🚀).
+This project is designed as a **student cybersecurity portfolio project** and is actively being expanded (HaveIBeenPwned integrations coming soon 🚀).
 
 ---
 
 ## 📂 Features
 - **WHOIS Lookup**: Get registrar, name servers, creation/expiry dates, and contact emails for a domain.  
-- **Username Check**: Test if a username exists on GitHub, Twitter, Instagram, and LinkedIn.  
+- **Username Check**: Test if a username exists on GitHub, Twitter, Instagram, SnapChat, Tiktok and LinkedIn.  
 - **CSV Export**: Save results in a clean format for later analysis.  
 - **CLI Interface**: Run like a real pentester’s tool with `--domain` or `--username`.  
 
@@ -21,7 +22,7 @@ This project is designed as a **student cybersecurity portfolio project** and is
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/osint-tool.git
+git clone https://github.com/Sark-man/osint-tool.git
 cd osint-tool
 ```
 
@@ -87,6 +88,21 @@ username,torvalds,LinkedIn,Status 999
 ```
 
 ---
+### Shodan lookup
+```bash
+python main.py --shodan 8.8.8.8 --export shodan_results.csv
+```
+Example Console Output:
+```
+{
+  "ip": "8.8.8.8",
+  "organization": "Google LLC",
+  "os": null,
+  "ports": [443, 53],
+  "hostnames": ["dns.google"],
+  "country": "United States"
+}
+```
 
 ## 🛠️ Project Structure
 ```
@@ -104,7 +120,6 @@ osint-tool/
 
 ## 📌 Next Steps
 Planned features:  
-- 🔍 Shodan API integration (IP/domain intelligence)  
 - 🔐 HaveIBeenPwned API integration (breach data check)  
 - 🖥️ GUI dashboard for results visualization  
 
