@@ -1,135 +1,111 @@
 # 🕵️ OSINT Automation Tool
 
-A lightweight Python tool for **Open Source Intelligence (OSINT)** tasks:  
-- 🌐 WHOIS lookups on domains  
-- 👤 Username footprinting across popular platforms  
-- 📊 Exporting results to CSV for reporting  
-- 🔍 Shodan integration for IP/domain intelligence (open ports, hostnames, org info)  
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)  
+[![Streamlit](https://img.shields.io/badge/Streamlit-Deployed-green.svg)](https://streamlit.io/)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-This project is designed as a **student cybersecurity portfolio project** and is actively being expanded (HaveIBeenPwned integrations coming soon 🚀).
-
----
-
-## 📂 Features
-- **WHOIS Lookup**: Get registrar, name servers, creation/expiry dates, and contact emails for a domain.  
-- **Username Check**: Test if a username exists on GitHub, Twitter, Instagram, SnapChat, Tiktok and LinkedIn.  
-- **CSV Export**: Save results in a clean format for later analysis.  
-- **CLI Interface**: Run like a real pentester’s tool with `--domain` or `--username`.  
+An **Open-Source Intelligence (OSINT) Automation Tool** built with **Python** and **Streamlit**.  
+It provides a simple CLI and a clean web interface for domain, username, Shodan, and data breach checks.  
 
 ---
 
-## ⚡ Quick Start
+## 🚀 Live Demo
+👉 Try it here: [OSINT Tool on Streamlit](https://osint-tool-sark-man.streamlit.app/)
 
-### 1. Clone the repo
+---
+
+## 📸 Screenshots
+
+- **WHOIS Lookup**
+  ![WHOIS Lookup](docs/screenshots/whois.png)
+
+- **Username Footprinting**
+  ![Username Check](docs/screenshots/username.png)
+
+- **Shodan**
+  ![Home Page](docs/screenshots/shodan.png)
+
+---
+
+## ✨ Features
+- 🔎 **WHOIS Lookup** for domains  
+- 👤 **Username Footprinting** across:
+  - GitHub
+  - Twitter
+  - Instagram
+  - LinkedIn
+  - Snapchat
+  - TikTok
+- 🌐 **Shodan Lookup** (IP/Domain information — requires API key)  
+- 🔐 **Have I Been Pwned (HIBP)** checks:
+  - Password (free k-anonymity API)
+  - Account/email (paid API key)  
+- 📤 **Export results** (CSV/JSON)  
+- 🖥 **Dual interface**: CLI and Streamlit web app  
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the repository
 ```bash
 git clone https://github.com/Sark-man/osint-tool.git
 cd osint-tool
 ```
 
-### 2. Create virtual environment & install dependencies
-
-**macOS / Linux**
+### 2. Create virtual environment
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-**Windows (PowerShell)**
-```powershell
 python -m venv venv
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-venv\Scripts\Activate.ps1
+venv\Scripts\activate   # on Windows
+source venv/bin/activate  # on Mac/Linux
+```
+
+### 3. Install dependencies
+```bash
 pip install -r requirements.txt
 ```
 
----
-
-## 🚀 Usage
-
-### WHOIS lookup
+### 4. Run the CLI
 ```bash
-python main.py --domain google.com
+python src/main.py --domain example.com
+python src/main.py --username johndoe
+python src/main.py --shodan 8.8.8.8
+python src/main.py --hibp-password password123
 ```
 
-Example output:
-```json
-{
-  "domain_name": "GOOGLE.COM",
-  "registrar": "MarkMonitor, Inc.",
-  "name_servers": ["NS1.GOOGLE.COM", "NS2.GOOGLE.COM"],
-  "creation_date": "1997-09-15",
-  "expiration_date": "2028-09-14",
-  "emails": ["abusecomplaints@markmonitor.com"]
-}
-```
-
----
-
-### Username footprinting
+### 5. Run the Streamlit app
 ```bash
-python main.py --username torvalds --export torvalds.csv
-```
-
-Example console output:
-```
-[+] Checking username 'torvalds' across platforms ...
-{'GitHub': 'Found', 'Twitter': 'Found', 'Instagram': 'Found', 'LinkedIn': 'Status 999'}
-[+] Exported results to torvalds.csv
-```
-
-Example CSV (`torvalds.csv`):
-```csv
-type,target,platform,status
-username,torvalds,GitHub,Found
-username,torvalds,Twitter,Found
-username,torvalds,Instagram,Found
-username,torvalds,LinkedIn,Status 999
-```
-
----
-### Shodan lookup
-```bash
-python main.py --shodan 8.8.8.8 --export shodan_results.csv
-```
-Example Console Output:
-```
-{
-  "ip": "8.8.8.8",
-  "organization": "Google LLC",
-  "os": null,
-  "ports": [443, 53],
-  "hostnames": ["dns.google"],
-  "country": "United States"
-}
-```
-
-## 🛠️ Project Structure
-```
-osint-tool/
-│── main.py
-│── requirements.txt
-│── modules/
-│   ├── __init__.py
-│   ├── whois_lookup.py
-│   ├── social_scraper.py
-│   └── utils.py
+streamlit run streamlit_app.py
 ```
 
 ---
 
-## 📌 Next Steps
-Planned features:  
-- 🔐 HaveIBeenPwned API integration (breach data check)  
-- 🖥️ GUI dashboard for results visualization  
+## 🔑 API Keys
+Some features require API keys:
+
+- **Shodan**: https://account.shodan.io/register  
+- **Have I Been Pwned (HIBP)**: https://haveibeenpwned.com/API/Key  
+
+On Streamlit Cloud → use **Secrets Manager**  
+```toml
+SHODAN_API_KEY = "your_shodan_key"
+HIBP_API_KEY = "your_hibp_key"
+```
+
+Locally → set environment variables
+```powershell
+$env:SHODAN_API_KEY="your_shodan_key"
+$env:HIBP_API_KEY="your_hibp_key"
+```
 
 ---
 
 ## ⚠️ Disclaimer
-This tool is for **educational and ethical use only**.  
-Do not use it to harass, stalk, or illegally investigate individuals or organizations. Always follow the law and obtain permission before running OSINT or security tests.
+This project is for **educational and defensive security purposes only**.  
+Do not use it to target domains or accounts without permission.  
+The author is not responsible for misuse.  
 
 ---
 
-## 📜 License
-This project is licensed under the [MIT License](LICENSE).
+## 👨‍💻 Author
+Developed by **[Sark-man](https://github.com/Sark-man)**
