@@ -6,6 +6,14 @@ Check presence of a username across platforms by HTTP status.
 import requests
 from time import sleep
 
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    )
+}
+
 PLATFORMS = {
     "GitHub": "https://github.com/{}",
     "Twitter": "https://twitter.com/{}",
@@ -16,9 +24,6 @@ PLATFORMS = {
 
 }
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; OSINTTool/1.0; +https://github.com/yourusername)"
-}
 
 def check_username(username: str, delay: float = 0.5) -> dict:
     """
@@ -28,11 +33,15 @@ def check_username(username: str, delay: float = 0.5) -> dict:
     for name, url_template in PLATFORMS.items():
         url = url_template.format(username)
         try:
-            resp = requests.get(url, headers=HEADERS, timeout=8)
+            resp = requests.get(url, headers=HEADERS, timeout=10)
             if resp.status_code == 200:
                 results[name] = "Found"
             elif resp.status_code == 404:
                 results[name] = "Not Found"
+            elif resp.status_code == 429 and name == "Instagram":
+                results[name] = "⚠️ Rate limited (try again later)"
+            elif resp.status_code == 999 and name == "LinkedIn":
+                results[name] = "⚠️ Restricted (LinkedIn blocks automated checks)"
             else:
                 results[name] = f"Status {resp.status_code}"
         except requests.RequestException as e:
