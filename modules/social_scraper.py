@@ -4,6 +4,7 @@ Check presence of a username across platforms by HTTP status.
 """
 
 import requests
+import time
 from time import sleep
 
 HEADERS = {
@@ -46,5 +47,6 @@ def check_username(username: str, delay: float = 0.5) -> dict:
                 results[name] = f"Status {resp.status_code}"
         except requests.RequestException as e:
             results[name] = f"Error: {e}"
-        sleep(delay)  # avoid hammering servers
+
+        time.sleep(1)  # avoid hammering servers
     return results
